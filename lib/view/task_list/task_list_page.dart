@@ -6,6 +6,8 @@ import '../style.dart';
 import '../../util/constants.dart';
 import '../../view_model/view_model.dart';
 
+import '../side_menu/side_menu_page.dart';
+
 class TaskListPage extends StatelessWidget {
   const TaskListPage({Key? key}) : super(key: key);
 
@@ -32,6 +34,11 @@ class TaskListPage extends StatelessWidget {
               : FloatingActionButton(
                   onPressed: () => _addNewTask(context: context),
                   child: const Icon(Icons.add),
+                ),
+          drawer: (screenSize == ScreenSize.LARGE)
+              ? null
+              : Drawer(
+                  child: SideMenuPage(),
                 ),
         );
       },
