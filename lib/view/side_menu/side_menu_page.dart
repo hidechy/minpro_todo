@@ -45,15 +45,23 @@ class SideMenuPage extends StatelessWidget {
           ListTile(
             title: Text(StringR.showLicense),
             onTap: () {
-              showAboutDialog(
+              showLicensePage(
                 context: context,
-                applicationIcon: const FlutterLogo(),
                 applicationName: StringR.appTitle,
+                applicationIcon: const FlutterLogo(),
                 applicationLegalese: "\u{a9} 2022 Hidechy.",
-                children: [
-                  const Text('他の情報やWidgetが出せる'),
-                ],
+                applicationVersion: "1.0.0",
               );
+
+              // showAboutDialog(
+              //   context: context,
+              //   applicationIcon: const FlutterLogo(),
+              //   applicationName: StringR.appTitle,
+              //   applicationLegalese: "\u{a9} 2022 Hidechy.",
+              //   children: [
+              //     const Text('他の情報やWidgetが出せる'),
+              //   ],
+              // );
             },
           ),
           AboutListTile(
