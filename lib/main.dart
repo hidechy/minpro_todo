@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:minpro_todo/di/providers.dart';
 import 'package:provider/provider.dart';
+
+import 'di/providers.dart';
 
 import 'view/home_screen.dart';
 
@@ -8,7 +9,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: globalProviders,
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: HomeScreen(),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
