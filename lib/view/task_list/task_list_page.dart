@@ -37,7 +37,7 @@ class TaskListPage extends StatelessWidget {
                 ),
           drawer: (screenSize == ScreenSize.LARGE)
               ? null
-              : Drawer(
+              : const Drawer(
                   child: SideMenuPage(),
                 ),
         );

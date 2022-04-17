@@ -20,7 +20,7 @@ class SideMenuPage extends StatelessWidget {
           DrawerHeader(
             child: Column(
               children: [
-                FlutterLogo(
+                const FlutterLogo(
                   size: 100.0,
                 ),
                 Text(StringR.appTitle),
@@ -42,12 +42,26 @@ class SideMenuPage extends StatelessWidget {
             onChanged: null,
             title: Text(StringR.isFinishedTaskIncluded),
           ),
+          ListTile(
+            title: Text(StringR.showLicense),
+            onTap: () {
+              showAboutDialog(
+                context: context,
+                applicationIcon: const FlutterLogo(),
+                applicationName: StringR.appTitle,
+                applicationLegalese: "\u{a9} 2022 Hidechy.",
+                children: [
+                  const Text('他の情報やWidgetが出せる'),
+                ],
+              );
+            },
+          ),
           AboutListTile(
-            icon: Icon(Icons.info_outline),
-            applicationIcon: FlutterLogo(),
+            icon: const Icon(Icons.info_outline),
+            applicationIcon: const FlutterLogo(),
             applicationName: StringR.appTitle,
             applicationLegalese: "\u{a9} 2022 Hidechy.",
-            aboutBoxChildren: [
+            aboutBoxChildren: const [
               Text('他の情報やWidgetが出せる'),
             ],
           ),
