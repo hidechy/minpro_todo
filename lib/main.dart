@@ -5,6 +5,8 @@ import 'di/providers.dart';
 
 import 'view/home_screen.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 void main() {
   runApp(
     MultiProvider(
@@ -23,6 +25,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [Locale("ja")],
     );
   }
 }

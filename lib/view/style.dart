@@ -23,3 +23,21 @@ class WidgetSize {
   static const double addTaskDialogWidth = 500.0;
   static const double addTaskDialogHeight = 500.0;
 }
+
+class TextStyles {
+  static const newTaskTitleTextStyle = TextStyle(fontSize: 18.0);
+  static const newTaskItemTextStyle = TextStyle(fontSize: 16.0);
+  static const newTaskDetailTextStyle = TextStyle(fontSize: 14.0);
+}
+
+class VerticalSpacer {
+  static const taskContent = SizedBox(height: 8.0);
+}
+
+class HorizontalSpacer {
+  static const taskContent = SizedBox(width: 24.0);
+}
+
+class WidgetColors {
+  static const timeOverChipBgColor = Colors.redAccent;
+}
