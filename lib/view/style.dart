@@ -18,3 +18,8 @@ enum ScreenSize {
   MID,
   LARGE,
 }
+
+class WidgetSize {
+  static const double addTaskDialogWidth = 500.0;
+  static const double addTaskDialogHeight = 500.0;
+}
