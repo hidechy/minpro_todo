@@ -8,6 +8,8 @@ import '../../view_model/view_model.dart';
 
 import '../side_menu/side_menu_page.dart';
 
+import '../common/show_add_new_task.dart';
+
 class TaskListPage extends StatelessWidget {
   const TaskListPage({Key? key}) : super(key: key);
 
@@ -49,5 +51,7 @@ class TaskListPage extends StatelessWidget {
   _sort({required BuildContext context}) {}
 
   ///
-  _addNewTask({required BuildContext context}) {}
+  _addNewTask({required BuildContext context}) {
+    showAddNewTask(context: context);
+  }
 }

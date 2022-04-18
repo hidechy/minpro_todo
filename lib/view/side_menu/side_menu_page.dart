@@ -7,6 +7,8 @@ import '../../util/constants.dart';
 import 'package:provider/provider.dart';
 import '../../view_model/view_model.dart';
 
+import '../common/show_add_new_task.dart';
+
 class SideMenuPage extends StatelessWidget {
   const SideMenuPage({Key? key}) : super(key: key);
 
@@ -79,5 +81,7 @@ class SideMenuPage extends StatelessWidget {
   }
 
   ///
-  _addNewTask({required BuildContext context}) {}
+  _addNewTask({required BuildContext context}) {
+    showAddNewTask(context: context);
+  }
 }
