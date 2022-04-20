@@ -9,4 +9,13 @@ class ViewModel extends ChangeNotifier {
   ViewModel({required this.repository});
 
   ScreenSize screenSize = ScreenSize.SMALL;
+
+  void addNewTask(
+    String title,
+    String detail,
+    DateTime limitDateTime,
+    bool isImportant,
+  ) {
+    repository.addNewTask(title, detail, limitDateTime, isImportant);
+  }
 }

@@ -4,6 +4,10 @@ import '../common/task_content_part.dart';
 
 import '../../util/constants.dart';
 
+import 'package:provider/provider.dart';
+
+import '../../view_model/view_model.dart';
+
 class AddTaskPage extends StatelessWidget {
   AddTaskPage({Key? key}) : super(key: key);
 
@@ -38,6 +42,14 @@ class AddTaskPage extends StatelessWidget {
     if (taskContentState == null) return;
 
     if (taskContentState.formKey.currentState!.validate()) {
+      final viewModel = context.read<ViewModel>();
+      viewModel.addNewTask(
+        taskContentState.titleController.text,
+        taskContentState.detailController.text,
+        taskContentState.limitDateTime,
+        taskContentState.isImportant,
+      );
+
       Navigator.pop(context);
     }
   }
