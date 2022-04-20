@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 
 import '../../view_model/view_model.dart';
 
+import '../common/show_snack_bar.dart';
+
 class AddTaskPage extends StatelessWidget {
   AddTaskPage({Key? key}) : super(key: key);
 
@@ -51,6 +53,11 @@ class AddTaskPage extends StatelessWidget {
       );
 
       Navigator.pop(context);
+
+      showSnackBar(
+        context: context,
+        contentText: StringR.addTaskCompleted,
+      );
     }
   }
 }
