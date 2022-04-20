@@ -5,7 +5,9 @@ import '../common/task_content_part.dart';
 import '../../util/constants.dart';
 
 class AddTaskPage extends StatelessWidget {
-  const AddTaskPage({Key? key}) : super(key: key);
+  AddTaskPage({Key? key}) : super(key: key);
+
+  final taskContentKey = GlobalKey<TaskContentPartState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +26,19 @@ class AddTaskPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const TaskContentPart(),
+      body: TaskContentPart(
+        key: taskContentKey,
+      ),
     );
   }
 
   ///
-  _onDoneAddNewTask({required BuildContext context}) {}
+  _onDoneAddNewTask({required BuildContext context}) {
+    final taskContentState = taskContentKey.currentState;
+    if (taskContentState == null) return;
+
+    if (taskContentState.formKey.currentState!.validate()) {
+      Navigator.pop(context);
+    }
+  }
 }

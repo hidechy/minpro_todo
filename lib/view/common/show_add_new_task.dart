@@ -24,7 +24,7 @@ showAddNewTask({required BuildContext context}) {
   } else {
     showDialog(
       context: context,
-      builder: (context) => const Dialog(
+      builder: (context) => Dialog(
         child: SizedBox(
           width: WidgetSize.addTaskDialogWidth,
           height: WidgetSize.addTaskDialogHeight,

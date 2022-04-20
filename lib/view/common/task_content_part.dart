@@ -10,85 +10,104 @@ class TaskContentPart extends StatefulWidget {
   const TaskContentPart({Key? key}) : super(key: key);
 
   @override
-  State<TaskContentPart> createState() => _TaskContentPartState();
+  State<TaskContentPart> createState() => TaskContentPartState();
 }
 
-class _TaskContentPartState extends State<TaskContentPart> {
+class TaskContentPartState extends State<TaskContentPart> {
   final titleController = TextEditingController();
   bool isImportant = false;
   DateTime limitDateTime = DateTime.now();
   final detailController = TextEditingController();
 
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextField(
-            autofocus: true,
-            maxLines: 1,
-            controller: titleController,
-            style: TextStyles.newTaskTitleTextStyle,
-            decoration: InputDecoration(
-              icon: const Icon(Icons.title),
-              hintText: StringR.title,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          VerticalSpacer.taskContent,
-          Row(
+      child: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              HorizontalSpacer.taskContent,
-              Checkbox(
-                value: isImportant,
-                onChanged: (value) {
-                  setState(
-                    () {
-                      isImportant = value!;
-                    },
-                  );
+//            TextField(
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return StringR.pleaseEnterTitle;
+                  }
+                  return null;
                 },
+                autovalidateMode: AutovalidateMode.always,
+
+                //
+                //
+
+                autofocus: true,
+                maxLines: 1,
+                controller: titleController,
+                style: TextStyles.newTaskTitleTextStyle,
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.title),
+                  hintText: StringR.title,
+                  border: const OutlineInputBorder(),
+                ),
               ),
-              Text(
-                StringR.important,
-                style: TextStyles.newTaskItemTextStyle,
+              VerticalSpacer.taskContent,
+              Row(
+                children: [
+                  HorizontalSpacer.taskContent,
+                  Checkbox(
+                    value: isImportant,
+                    onChanged: (value) {
+                      setState(
+                        () {
+                          isImportant = value!;
+                        },
+                      );
+                    },
+                  ),
+                  Text(
+                    StringR.important,
+                    style: TextStyles.newTaskItemTextStyle,
+                  ),
+                ],
+              ),
+              VerticalSpacer.taskContent,
+              Row(
+                children: [
+                  HorizontalSpacer.taskContent,
+                  IconButton(
+                    onPressed: () => _setLimitDate(),
+                    icon: const Icon(Icons.calendar_today),
+                  ),
+                  Text(
+                    convertDateTimeToString(limitDateTime),
+                    style: TextStyles.newTaskItemTextStyle,
+                  ),
+                  HorizontalSpacer.taskContent,
+                  (DateTime.now().compareTo(limitDateTime) > 0)
+                      ? Chip(
+                          label: Text(StringR.timeOver),
+                          backgroundColor: WidgetColors.timeOverChipBgColor,
+                        )
+                      : Container(),
+                ],
+              ),
+              VerticalSpacer.taskContent,
+              TextField(
+                maxLines: 10,
+                controller: detailController,
+                style: TextStyles.newTaskDetailTextStyle,
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.description),
+                  hintText: StringR.detail,
+                  border: const OutlineInputBorder(),
+                ),
               ),
             ],
           ),
-          VerticalSpacer.taskContent,
-          Row(
-            children: [
-              HorizontalSpacer.taskContent,
-              IconButton(
-                onPressed: () => _setLimitDate(),
-                icon: Icon(Icons.calendar_today),
-              ),
-              Text(
-                convertDateTimeToString(limitDateTime),
-                style: TextStyles.newTaskItemTextStyle,
-              ),
-              HorizontalSpacer.taskContent,
-              (DateTime.now().compareTo(limitDateTime) > 0)
-                  ? Chip(
-                      label: Text(StringR.timeOver),
-                      backgroundColor: WidgetColors.timeOverChipBgColor,
-                    )
-                  : Container(),
-            ],
-          ),
-          VerticalSpacer.taskContent,
-          TextField(
-            maxLines: 10,
-            controller: detailController,
-            style: TextStyles.newTaskDetailTextStyle,
-            decoration: InputDecoration(
-              icon: Icon(Icons.description),
-              hintText: StringR.detail,
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -98,9 +117,9 @@ class _TaskContentPartState extends State<TaskContentPart> {
     limitDateTime = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
-          firstDate: DateTime.now().subtract(Duration(days: 365)),
-          lastDate: DateTime.now().add(Duration(days: 3650)),
-          locale: Locale("ja"),
+          firstDate: DateTime.now().subtract(const Duration(days: 365)),
+          lastDate: DateTime.now().add(const Duration(days: 3650)),
+          locale: const Locale("ja"),
         ) ??
         DateTime.now();
 

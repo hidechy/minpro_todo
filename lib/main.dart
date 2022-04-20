@@ -25,12 +25,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [Locale("ja")],
+      supportedLocales: const [Locale("ja")],
     );
   }
 }
