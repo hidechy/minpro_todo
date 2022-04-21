@@ -27,16 +27,23 @@ class TaskListPage extends StatelessWidget {
         final screenSize = vm.screenSize;
         final selectedTaskList = vm.selectedTaskList;
 
+        final isSorted = vm.isSorted;
+
         return Scaffold(
           backgroundColor: CustomColors.taskListBgColor,
           appBar: AppBar(
             title: Text(StringR.taskList),
             centerTitle: true,
             actions: [
-              IconButton(
-                onPressed: () => _sort(context: context),
-                icon: const Icon(Icons.sort),
-              ),
+              (isSorted)
+                  ? IconButton(
+                      onPressed: () => _sort(context: context, isSort: false),
+                      icon: const Icon(Icons.undo),
+                    )
+                  : IconButton(
+                      onPressed: () => _sort(context: context, isSort: true),
+                      icon: const Icon(Icons.sort),
+                    ),
             ],
           ),
           floatingActionButton: (screenSize == ScreenSize.LARGE)
@@ -73,7 +80,10 @@ class TaskListPage extends StatelessWidget {
   }
 
   ///
-  _sort({required BuildContext context}) {}
+  _sort({required BuildContext context, required bool isSort}) {
+    final viewModel = context.read<ViewModel>();
+    viewModel.sort(isSort);
+  }
 
   ///
   _addNewTask({required BuildContext context}) {

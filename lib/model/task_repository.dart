@@ -38,6 +38,11 @@ class TaskRepository {
     var returnList = <Task>[];
     returnList =
         getBaseTaskList(isFinishedTaskIncluded: isFinishedTaskIncluded);
+
+    if (isSorted) {
+      return sortByImportant(returnList);
+    }
+
     return returnList;
   }
 
@@ -46,5 +51,11 @@ class TaskRepository {
     baseTaskList.sort((a, b) => a.limitDateTime.compareTo(b.limitDateTime));
 
     return baseTaskList;
+  }
+
+  ///
+  List<Task> sortByImportant(List<Task> taskList) {
+    taskList.sort((a, b) => (a.isImportant) ? -1 : 1);
+    return taskList;
   }
 }
