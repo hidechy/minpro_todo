@@ -10,6 +10,8 @@ import '../side_menu/side_menu_page.dart';
 
 import '../common/show_add_new_task.dart';
 
+import 'task_list_tile_part.dart';
+
 class TaskListPage extends StatelessWidget {
   const TaskListPage({Key? key}) : super(key: key);
 
@@ -26,7 +28,7 @@ class TaskListPage extends StatelessWidget {
         final selectedTaskList = vm.selectedTaskList;
 
         return Scaffold(
-          backgroundColor: PageColor.taskListBgColor,
+          backgroundColor: CustomColors.taskListBgColor,
           appBar: AppBar(
             title: Text(StringR.taskList),
             centerTitle: true,
@@ -53,11 +55,15 @@ class TaskListPage extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, int index) {
               final task = selectedTaskList[index];
+
+              final now = DateTime.now();
+              final limit = task.limitDateTime;
+
               return Card(
-                child: ListTile(
-                  title: Text(task.title),
-                  subtitle: Text(task.limitDateTime.toString()),
-                ),
+                color: (now.compareTo(limit) > 0)
+                    ? CustomColors.periodOverTaskColor
+                    : CustomColors.taskCardBgColor(context),
+                child: TileListTilePart(task: task),
               );
             },
           ),

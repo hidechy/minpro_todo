@@ -2,10 +2,22 @@
 
 import 'package:flutter/material.dart';
 
-class PageColor {
+// class PageColor {
+//   static const sideMenuBgColor = Color(0xFF1b1b1b);
+//   static const taskListBgColor = Color(0xFF212121);
+//   static const detailBgColor = Color(0xFF424242);
+// }
+
+class CustomColors {
   static const sideMenuBgColor = Color(0xFF1b1b1b);
   static const taskListBgColor = Color(0xFF212121);
   static const detailBgColor = Color(0xFF424242);
+
+  static const periodOverTaskColor = Colors.redAccent;
+
+  static Color taskCardBgColor(BuildContext context) {
+    return Theme.of(context).cardColor;
+  }
 }
 
 class BreakPointWidth {
