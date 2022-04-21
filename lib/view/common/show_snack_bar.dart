@@ -22,7 +22,7 @@ showSnackBar({required BuildContext context, required String contentText}) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: 60,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),

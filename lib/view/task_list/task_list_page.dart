@@ -15,9 +15,15 @@ class TaskListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future(() {
+      final viewModel = context.read<ViewModel>();
+      viewModel.getTaskList();
+    });
+
     return Consumer<ViewModel>(
       builder: (context, vm, child) {
         final screenSize = vm.screenSize;
+        final selectedTaskList = vm.selectedTaskList;
 
         return Scaffold(
           backgroundColor: PageColor.taskListBgColor,
@@ -42,6 +48,19 @@ class TaskListPage extends StatelessWidget {
               : const Drawer(
                   child: SideMenuPage(),
                 ),
+          body: ListView.builder(
+            itemCount: selectedTaskList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, int index) {
+              final task = selectedTaskList[index];
+              return Card(
+                child: ListTile(
+                  title: Text(task.title),
+                  subtitle: Text(task.limitDateTime.toString()),
+                ),
+              );
+            },
+          ),
         );
       },
     );
