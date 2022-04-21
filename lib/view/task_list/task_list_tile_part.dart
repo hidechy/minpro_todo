@@ -10,13 +10,22 @@ import '../../util/constants.dart';
 import '../style.dart';
 
 class TileListTilePart extends StatelessWidget {
-  const TileListTilePart({Key? key, required this.task}) : super(key: key);
+  const TileListTilePart(
+      {Key? key, required this.task, required this.onFinishChanged})
+      : super(key: key);
 
   final Task task;
+
+  final ValueChanged onFinishChanged;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: Radio(
+        value: true,
+        groupValue: task.isFinished,
+        onChanged: (value) => onFinishChanged(value),
+      ),
       title: Row(
         children: [
           (task.isImportant)

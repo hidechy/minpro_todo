@@ -44,4 +44,10 @@ class ViewModel extends ChangeNotifier {
     isSorted = isSort;
     getTaskList();
   }
+
+  ///
+  void finishTask({required Task selectedTask, required isFinished}) {
+    repository.finishTask(selectedTask: selectedTask, isFinished: isFinished);
+    getTaskList();
+  }
 }

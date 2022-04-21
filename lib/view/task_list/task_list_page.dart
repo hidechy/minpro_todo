@@ -12,6 +12,8 @@ import '../common/show_add_new_task.dart';
 
 import 'task_list_tile_part.dart';
 
+import '../../data/task.dart';
+
 class TaskListPage extends StatelessWidget {
   const TaskListPage({Key? key}) : super(key: key);
 
@@ -70,7 +72,13 @@ class TaskListPage extends StatelessWidget {
                 color: (now.compareTo(limit) > 0)
                     ? CustomColors.periodOverTaskColor
                     : CustomColors.taskCardBgColor(context),
-                child: TileListTilePart(task: task),
+                child: TileListTilePart(
+                  task: task,
+                  onFinishChanged: (isFinished) => _finishTask(
+                      context: context,
+                      isFinished: isFinished,
+                      selectedTask: task),
+                ),
               );
             },
           ),
@@ -88,5 +96,16 @@ class TaskListPage extends StatelessWidget {
   ///
   _addNewTask({required BuildContext context}) {
     showAddNewTask(context: context);
+  }
+
+  ///
+  _finishTask(
+      {required BuildContext context,
+      required isFinished,
+      required Task selectedTask}) {
+    if (isFinished == null) return;
+
+    final viewModel = context.read<ViewModel>();
+    viewModel.finishTask(selectedTask: selectedTask, isFinished: isFinished);
   }
 }

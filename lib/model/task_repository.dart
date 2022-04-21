@@ -87,4 +87,23 @@ class TaskRepository {
 
     return taskList;
   }
+
+  ///
+  void finishTask({required Task selectedTask, required isFinished}) {
+    final updateTask = selectedTask.copyWith(isFinished: isFinished);
+    updateTaskList(updateTask: updateTask);
+  }
+
+  ///
+  void updateTaskList({required Task updateTask}) {
+//    final index = baseTaskList.indexOf(updateTask);
+    final index = searchIndex(selectedTask: updateTask);
+
+    baseTaskList[index] = updateTask;
+  }
+
+  ///
+  int searchIndex({required Task selectedTask}) {
+    return baseTaskList.indexWhere((task) => task.id == selectedTask.id);
+  }
 }
