@@ -5,6 +5,10 @@ import '../../data/task.dart';
 
 import '../../util/functions.dart';
 
+import '../../util/constants.dart';
+
+import '../style.dart';
+
 class TileListTilePart extends StatelessWidget {
   const TileListTilePart({Key? key, required this.task}) : super(key: key);
 
@@ -13,8 +17,23 @@ class TileListTilePart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: AutoSizeText(task.title),
-      subtitle: Text(convertDateTimeToString(task.limitDateTime)),
+      title: Row(
+        children: [
+          (task.isImportant)
+              ? Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Chip(
+                    label: Text(
+                      StringR.important,
+                      style: TextStyles.listTileChipTextStyle,
+                    ),
+                  ),
+                )
+              : Container(),
+          Text(task.title),
+        ],
+      ),
+      subtitle: AutoSizeText(convertDateTimeToString(task.limitDateTime)),
     );
   }
 }
