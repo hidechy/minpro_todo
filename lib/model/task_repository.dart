@@ -121,4 +121,11 @@ class TaskRepository {
   void undo() {
     baseTaskList = baseTaskListBeforeChange;
   }
+
+  ///
+  void deleteTask(Task deleteTask) {
+    baseTaskListBeforeChange = [...baseTaskList];
+    final index = searchIndex(selectedTask: deleteTask);
+    baseTaskList.removeAt(index);
+  }
 }

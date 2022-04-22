@@ -11,12 +11,17 @@ import '../style.dart';
 
 class TileListTilePart extends StatelessWidget {
   const TileListTilePart(
-      {Key? key, required this.task, required this.onFinishChanged})
+      {Key? key,
+      required this.task,
+      required this.onFinishChanged,
+      required this.onDelete})
       : super(key: key);
 
   final Task task;
 
   final ValueChanged onFinishChanged;
+
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +53,7 @@ class TileListTilePart extends StatelessWidget {
         ],
       ),
       subtitle: AutoSizeText(convertDateTimeToString(task.limitDateTime)),
+      onLongPress: onDelete,
     );
   }
 }

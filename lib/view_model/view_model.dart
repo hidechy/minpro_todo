@@ -62,4 +62,10 @@ class ViewModel extends ChangeNotifier {
     isFinishedTaskIncluded = isIncluded;
     getTaskList();
   }
+
+  ///
+  void deleteTask({required Task selectedTask}) {
+    repository.deleteTask(selectedTask);
+    getTaskList();
+  }
 }

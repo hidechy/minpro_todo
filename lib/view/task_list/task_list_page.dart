@@ -80,6 +80,8 @@ class TaskListPage extends StatelessWidget {
                       context: context,
                       isFinished: isFinished,
                       selectedTask: task),
+                  onDelete: () =>
+                      _deleteTask(context: context, selectedTask: task),
                 ),
               );
             },
@@ -113,6 +115,19 @@ class TaskListPage extends StatelessWidget {
     showSnackBar(
       context: context,
       contentText: StringR.finishTaskCompleted,
+      isSnackBarActionNeeded: true,
+      onUndone: () => viewModel.undo(),
+    );
+  }
+
+  ///
+  _deleteTask({required BuildContext context, required Task selectedTask}) {
+    final viewModel = context.read<ViewModel>();
+    viewModel.deleteTask(selectedTask: selectedTask);
+
+    showSnackBar(
+      context: context,
+      contentText: StringR.deleteTaskCompleted,
       isSnackBarActionNeeded: true,
       onUndone: () => viewModel.undo(),
     );
