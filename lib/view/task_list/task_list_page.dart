@@ -16,6 +16,8 @@ import '../../data/task.dart';
 
 import '../common/show_snack_bar.dart';
 
+import '../detail/detail_screen.dart';
+
 class TaskListPage extends StatelessWidget {
   const TaskListPage({Key? key}) : super(key: key);
 
@@ -82,6 +84,8 @@ class TaskListPage extends StatelessWidget {
                       selectedTask: task),
                   onDelete: () =>
                       _deleteTask(context: context, selectedTask: task),
+                  onEdit: () =>
+                      _showTaskDetail(context: context, selectedTask: task),
                 ),
               );
             },
@@ -131,5 +135,21 @@ class TaskListPage extends StatelessWidget {
       isSnackBarActionNeeded: true,
       onUndone: () => viewModel.undo(),
     );
+  }
+
+  ///
+  _showTaskDetail({required BuildContext context, required Task selectedTask}) {
+    final viewModel = context.read<ViewModel>();
+    final screenSize = viewModel.screenSize;
+    viewModel.setCurrentTask(selectedTask: selectedTask);
+
+    if (screenSize == ScreenSize.SMALL) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const DetailScreen(),
+        ),
+      );
+    }
   }
 }

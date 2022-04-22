@@ -17,6 +17,8 @@ class ViewModel extends ChangeNotifier {
 
   bool isFinishedTaskIncluded = false;
 
+  Task? currentTask;
+
   ///
   void addNewTask(
     String title,
@@ -67,5 +69,11 @@ class ViewModel extends ChangeNotifier {
   void deleteTask({required Task selectedTask}) {
     repository.deleteTask(selectedTask);
     getTaskList();
+  }
+
+  ///
+  void setCurrentTask({required Task selectedTask}) {
+    currentTask = selectedTask;
+    notifyListeners();
   }
 }

@@ -14,7 +14,8 @@ class TileListTilePart extends StatelessWidget {
       {Key? key,
       required this.task,
       required this.onFinishChanged,
-      required this.onDelete})
+      required this.onDelete,
+      required this.onEdit})
       : super(key: key);
 
   final Task task;
@@ -22,6 +23,8 @@ class TileListTilePart extends StatelessWidget {
   final ValueChanged onFinishChanged;
 
   final VoidCallback onDelete;
+
+  final VoidCallback onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,7 @@ class TileListTilePart extends StatelessWidget {
       ),
       subtitle: AutoSizeText(convertDateTimeToString(task.limitDateTime)),
       onLongPress: onDelete,
+      onTap: onEdit,
     );
   }
 }
