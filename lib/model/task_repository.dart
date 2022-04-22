@@ -50,7 +50,11 @@ class TaskRepository {
   List<Task> getBaseTaskList({required bool isFinishedTaskIncluded}) {
     baseTaskList.sort((a, b) => a.limitDateTime.compareTo(b.limitDateTime));
 
-    return baseTaskList;
+    if (isFinishedTaskIncluded) {
+      return baseTaskList;
+    } else {
+      return baseTaskList.where((task) => task.isFinished == false).toList();
+    }
   }
 
   ///
