@@ -50,4 +50,10 @@ class ViewModel extends ChangeNotifier {
     repository.finishTask(selectedTask: selectedTask, isFinished: isFinished);
     getTaskList();
   }
+
+  ///
+  undo() {
+    repository.undo();
+    getTaskList();
+  }
 }

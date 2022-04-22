@@ -14,6 +14,8 @@ import 'task_list_tile_part.dart';
 
 import '../../data/task.dart';
 
+import '../common/show_snack_bar.dart';
+
 class TaskListPage extends StatelessWidget {
   const TaskListPage({Key? key}) : super(key: key);
 
@@ -107,5 +109,12 @@ class TaskListPage extends StatelessWidget {
 
     final viewModel = context.read<ViewModel>();
     viewModel.finishTask(selectedTask: selectedTask, isFinished: isFinished);
+
+    showSnackBar(
+      context: context,
+      contentText: StringR.finishTaskCompleted,
+      isSnackBarActionNeeded: true,
+      onUndone: () => viewModel.undo(),
+    );
   }
 }

@@ -1,6 +1,8 @@
 import '../data/task.dart';
 
 class TaskRepository {
+  List<Task> baseTaskListBeforeChange = [];
+
   void addNewTask(
     String title,
     String detail,
@@ -94,6 +96,10 @@ class TaskRepository {
 
   ///
   void finishTask({required Task selectedTask, required isFinished}) {
+    ///
+//    baseTaskListBeforeChange = baseTaskList;
+    baseTaskListBeforeChange = [...baseTaskList];
+
     final updateTask = selectedTask.copyWith(isFinished: isFinished);
     updateTaskList(updateTask: updateTask);
   }
@@ -109,5 +115,10 @@ class TaskRepository {
   ///
   int searchIndex({required Task selectedTask}) {
     return baseTaskList.indexWhere((task) => task.id == selectedTask.id);
+  }
+
+  ///
+  void undo() {
+    baseTaskList = baseTaskListBeforeChange;
   }
 }
