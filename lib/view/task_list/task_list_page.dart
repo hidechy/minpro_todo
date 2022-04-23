@@ -18,6 +18,8 @@ import '../common/show_snack_bar.dart';
 
 import '../detail/detail_screen.dart';
 
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 class TaskListPage extends StatelessWidget {
   const TaskListPage({Key? key}) : super(key: key);
 
@@ -76,22 +78,76 @@ class TaskListPage extends StatelessWidget {
                 color: (now.compareTo(limit) > 0)
                     ? CustomColors.periodOverTaskColor
                     : CustomColors.taskCardBgColor(context),
-                child: TileListTilePart(
-                  task: task,
-                  onFinishChanged: (isFinished) => _finishTask(
-                      context: context,
-                      isFinished: isFinished,
-                      selectedTask: task),
-                  onDelete: () =>
-                      _deleteTask(context: context, selectedTask: task),
-                  onEdit: () =>
-                      _showTaskDetail(context: context, selectedTask: task),
-                ),
+                // child: TileListTilePart(
+                //   task: task,
+                //   onFinishChanged: (isFinished) => _finishTask(
+                //       context: context,
+                //       isFinished: isFinished,
+                //       selectedTask: task),
+                //   onDelete: () =>
+                //       _deleteTask(context: context, selectedTask: task),
+                //   onEdit: () =>
+                //       _showTaskDetail(context: context, selectedTask: task),
+                // ),
+                child: (DeviceInfo.isWebOrDesktop)
+                    ? _createTaskListTile(context: context, task: task)
+                    : Slidable(
+                        child:
+                            _createTaskListTile(context: context, task: task),
+                        endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          extentRatio: 0.6,
+                          children: [
+                            SlidableAction(
+                              label: StringR.edit,
+                              icon: Icons.edit,
+                              onPressed: (context) => _showTaskDetail(
+                                context: context,
+                                selectedTask: task,
+                              ),
+                              backgroundColor:
+                                  CustomColors.slideActionColorLight(context),
+                            ),
+                            SlidableAction(
+                              label: StringR.delete,
+                              icon: Icons.delete,
+                              onPressed: (context) => _deleteTask(
+                                context: context,
+                                selectedTask: task,
+                              ),
+                              backgroundColor:
+                                  CustomColors.slideActionColorDark(context),
+                            ),
+                            SlidableAction(
+                              label: StringR.close,
+                              icon: Icons.close,
+                              onPressed: (context) {},
+                            ),
+                          ],
+                          dismissible: DismissiblePane(
+                            onDismissed: () => _deleteTask(
+                                context: context, selectedTask: task),
+                          ),
+                        ),
+                        key: ValueKey<int>(task.id),
+                      ),
               );
             },
           ),
         );
       },
+    );
+  }
+
+  ///
+  Widget _createTaskListTile(
+      {required BuildContext context, required Task task}) {
+    return TileListTilePart(
+      task: task,
+      onFinishChanged: (isFinished) => _finishTask(
+          context: context, isFinished: isFinished, selectedTask: task),
+      onDelete: () => _deleteTask(context: context, selectedTask: task),
+      onEdit: () => _showTaskDetail(context: context, selectedTask: task),
     );
   }
 

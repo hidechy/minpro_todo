@@ -28,6 +28,14 @@ class CustomColors {
   static Color? detailFabTextColor(BuildContext context) {
     return Theme.of(context).textTheme.caption?.color;
   }
+
+  static Color slideActionColorDark(BuildContext context) {
+    return Theme.of(context).primaryColorDark;
+  }
+
+  static Color slideActionColorLight(BuildContext context) {
+    return Theme.of(context).primaryColorLight;
+  }
 }
 
 class BreakPointWidth {
