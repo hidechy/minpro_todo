@@ -53,9 +53,10 @@ class DetailPage extends StatelessWidget {
                       onPressed: () => _updateTask(
                           context: context, selectedTask: selectedTask),
                     ),
-                    const IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: null,
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => _deleteTask(
+                          context: context, selectedTask: selectedTask),
                     ),
                   ]
                 : null,
@@ -114,17 +115,40 @@ class DetailPage extends StatelessWidget {
         isSnackBarActionNeeded: false,
       );
 
-      endEditTask(context: context);
+      endEditTask(
+        context: context,
+        isEdit: true,
+      );
     }
   }
 
   ///
-  void endEditTask({required BuildContext context}) {
+  void endEditTask({required BuildContext context, required bool isEdit}) {
     final viewModel = context.read<ViewModel>();
     final screenSize = viewModel.screenSize;
 
     if (screenSize == ScreenSize.SMALL) {
       Navigator.pop(context);
+    } else {
+      if (!isEdit) viewModel.setCurrentTask(null);
     }
+  }
+
+  ///
+  _deleteTask({required BuildContext context, required Task selectedTask}) {
+    final viewModel = context.read<ViewModel>();
+    viewModel.deleteTask(selectedTask: selectedTask);
+
+    showSnackBar(
+      context: context,
+      contentText: StringR.deleteTaskCompleted,
+      isSnackBarActionNeeded: true,
+      onUndone: () => viewModel.undo(),
+    );
+
+    endEditTask(
+      context: context,
+      isEdit: false,
+    );
   }
 }

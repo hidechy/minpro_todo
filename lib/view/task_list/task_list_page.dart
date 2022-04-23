@@ -122,6 +122,8 @@ class TaskListPage extends StatelessWidget {
       isSnackBarActionNeeded: true,
       onUndone: () => viewModel.undo(),
     );
+
+    viewModel.setCurrentTask(null);
   }
 
   ///
@@ -135,6 +137,8 @@ class TaskListPage extends StatelessWidget {
       isSnackBarActionNeeded: true,
       onUndone: () => viewModel.undo(),
     );
+
+    viewModel.setCurrentTask(null);
   }
 
   ///
