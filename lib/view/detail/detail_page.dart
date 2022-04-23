@@ -29,65 +29,109 @@ class DetailPage extends StatelessWidget {
           _updateDetailInfo(selectedTask: selectedTask);
         }
 
-        return Scaffold(
-          backgroundColor: CustomColors.detailBgColor,
-          appBar: AppBar(
-            leading: (selectedTask != null)
-                ? IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      _clearCurrentTask(context: context);
+        return FocusTraversalGroup(
+          policy: OrderedTraversalPolicy(),
+          child: Scaffold(
+            backgroundColor: CustomColors.detailBgColor,
+            appBar: AppBar(
+              //
+              //
 
-                      if (screenSize == ScreenSize.SMALL) {
-                        Navigator.pop(context);
-                      }
-                    },
+              leading: (selectedTask != null)
+                  ? IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        _clearCurrentTask(context: context);
+
+                        if (screenSize == ScreenSize.SMALL) {
+                          Navigator.pop(context);
+                        }
+                      },
+                    )
+                  : null,
+
+              //
+              //
+
+              title: Text(StringR.taskDetail),
+              centerTitle: true,
+
+              actions: (selectedTask != null)
+                  ? [
+                      //
+                      //
+
+                      FocusTraversalOrder(
+                        order: const NumericFocusOrder(3.0),
+                        child: IconButton(
+                          icon: const Icon(Icons.done),
+                          onPressed: () => _updateTask(
+                              context: context, selectedTask: selectedTask),
+                        ),
+                      ),
+
+                      //
+                      //
+
+                      FocusTraversalOrder(
+                        order: const NumericFocusOrder(4.0),
+                        child: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => _deleteTask(
+                              context: context, selectedTask: selectedTask),
+                        ),
+                      ),
+
+                      //
+                      //
+                    ]
+                  : null,
+            ),
+            // body: ListTile(
+            //   title: Text(selectedTask?.title ?? ""),
+            //   subtitle: Text(selectedTask?.limitDateTime.toString() ?? ""),
+            // ),
+
+            //
+            //
+
+            body: (selectedTask != null)
+                ? FocusTraversalOrder(
+                    order: const NumericFocusOrder(1.0),
+                    child: TaskContentPart(
+                      key: taskContentPartKey,
+                      isEditMode: true,
+                      selectedTask: selectedTask,
+                    ),
                   )
                 : null,
-            title: Text(StringR.taskDetail),
-            centerTitle: true,
-            actions: (selectedTask != null)
-                ? [
-                    IconButton(
-                      icon: const Icon(Icons.done),
-                      onPressed: () => _updateTask(
+
+            //
+            //
+
+            floatingActionButton: (selectedTask != null)
+                ? FocusTraversalOrder(
+                    order: const NumericFocusOrder(2.0),
+                    child: FloatingActionButton.extended(
+                      onPressed: () => _finishTask(
                           context: context, selectedTask: selectedTask),
+                      label: Text(
+                        (!selectedTask.isFinished)
+                            ? StringR.complete
+                            : StringR.inComplete,
+                        style: TextStyles.completeButtonTextStyle.copyWith(
+                          color: CustomColors.detailFabTextColor(context),
+                        ),
+                      ),
+                      backgroundColor: CustomColors.detailPageFabBgColor,
+                      elevation: 0.0,
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () => _deleteTask(
-                          context: context, selectedTask: selectedTask),
-                    ),
-                  ]
+                  )
                 : null,
+
+            //
+            //
           ),
-          // body: ListTile(
-          //   title: Text(selectedTask?.title ?? ""),
-          //   subtitle: Text(selectedTask?.limitDateTime.toString() ?? ""),
-          // ),
-          body: (selectedTask != null)
-              ? TaskContentPart(
-                  key: taskContentPartKey,
-                  isEditMode: true,
-                  selectedTask: selectedTask,
-                )
-              : null,
-          floatingActionButton: (selectedTask != null)
-              ? FloatingActionButton.extended(
-                  onPressed: () =>
-                      _finishTask(context: context, selectedTask: selectedTask),
-                  label: Text(
-                    (!selectedTask.isFinished)
-                        ? StringR.complete
-                        : StringR.inComplete,
-                    style: TextStyles.completeButtonTextStyle.copyWith(
-                      color: CustomColors.detailFabTextColor(context),
-                    ),
-                  ),
-                  backgroundColor: CustomColors.detailPageFabBgColor,
-                  elevation: 0.0,
-                )
-              : null,
         );
       },
     );

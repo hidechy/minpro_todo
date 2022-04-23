@@ -54,84 +54,87 @@ class TaskContentPartState extends State<TaskContentPart> {
       child: Form(
         key: formKey,
         child: SingleChildScrollView(
-          child: Column(
-            children: [
+          child: FocusTraversalGroup(
+            policy: WidgetOrderTraversalPolicy(),
+            child: Column(
+              children: [
 //            TextField(
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return StringR.pleaseEnterTitle;
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.always,
+                TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return StringR.pleaseEnterTitle;
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.always,
 
-                //
-                //
+                  //
+                  //
 
-                autofocus: true,
-                maxLines: 1,
-                controller: titleController,
-                style: TextStyles.newTaskTitleTextStyle,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.title),
-                  hintText: StringR.title,
-                  border: const OutlineInputBorder(),
+                  autofocus: true,
+                  maxLines: 1,
+                  controller: titleController,
+                  style: TextStyles.newTaskTitleTextStyle,
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.title),
+                    hintText: StringR.title,
+                    border: const OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              VerticalSpacer.taskContent,
-              Row(
-                children: [
-                  HorizontalSpacer.taskContent,
-                  Checkbox(
-                    value: isImportant,
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          isImportant = value!;
-                        },
-                      );
-                    },
-                  ),
-                  Text(
-                    StringR.important,
-                    style: TextStyles.newTaskItemTextStyle,
-                  ),
-                ],
-              ),
-              VerticalSpacer.taskContent,
-              Row(
-                children: [
-                  HorizontalSpacer.taskContent,
-                  IconButton(
-                    onPressed: () => _setLimitDate(),
-                    icon: const Icon(Icons.calendar_today),
-                  ),
-                  Text(
-                    convertDateTimeToString(limitDateTime),
-                    style: TextStyles.newTaskItemTextStyle,
-                  ),
-                  HorizontalSpacer.taskContent,
-                  (DateTime.now().compareTo(limitDateTime) > 0)
-                      ? Chip(
-                          label: Text(StringR.timeOver),
-                          backgroundColor: WidgetColors.timeOverChipBgColor,
-                        )
-                      : Container(),
-                ],
-              ),
-              VerticalSpacer.taskContent,
-              TextField(
-                maxLines: 10,
-                controller: detailController,
-                style: TextStyles.newTaskDetailTextStyle,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.description),
-                  hintText: StringR.detail,
-                  border: const OutlineInputBorder(),
+                VerticalSpacer.taskContent,
+                Row(
+                  children: [
+                    HorizontalSpacer.taskContent,
+                    Checkbox(
+                      value: isImportant,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            isImportant = value!;
+                          },
+                        );
+                      },
+                    ),
+                    Text(
+                      StringR.important,
+                      style: TextStyles.newTaskItemTextStyle,
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                VerticalSpacer.taskContent,
+                Row(
+                  children: [
+                    HorizontalSpacer.taskContent,
+                    IconButton(
+                      onPressed: () => _setLimitDate(),
+                      icon: const Icon(Icons.calendar_today),
+                    ),
+                    Text(
+                      convertDateTimeToString(limitDateTime),
+                      style: TextStyles.newTaskItemTextStyle,
+                    ),
+                    HorizontalSpacer.taskContent,
+                    (DateTime.now().compareTo(limitDateTime) > 0)
+                        ? Chip(
+                            label: Text(StringR.timeOver),
+                            backgroundColor: WidgetColors.timeOverChipBgColor,
+                          )
+                        : Container(),
+                  ],
+                ),
+                VerticalSpacer.taskContent,
+                TextField(
+                  maxLines: 10,
+                  controller: detailController,
+                  style: TextStyles.newTaskDetailTextStyle,
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.description),
+                    hintText: StringR.detail,
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
