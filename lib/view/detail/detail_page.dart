@@ -10,6 +10,8 @@ import '../../util/constants.dart';
 
 import '../common/task_content_part.dart';
 
+import '../common/show_snack_bar.dart';
+
 class DetailPage extends StatelessWidget {
   DetailPage({Key? key}) : super(key: key);
 
@@ -46,9 +48,10 @@ class DetailPage extends StatelessWidget {
             centerTitle: true,
             actions: (selectedTask != null)
                 ? [
-                    const IconButton(
-                      icon: Icon(Icons.done),
-                      onPressed: null,
+                    IconButton(
+                      icon: const Icon(Icons.done),
+                      onPressed: () => _updateTask(
+                          context: context, selectedTask: selectedTask),
                     ),
                     const IconButton(
                       icon: Icon(Icons.delete),
@@ -86,5 +89,42 @@ class DetailPage extends StatelessWidget {
 
     taskContentPartState.taskEditing = selectedTask;
     taskContentPartState.setDetailData();
+  }
+
+  ///
+  _updateTask({required BuildContext context, required Task selectedTask}) {
+    final taskContentPartState = taskContentPartKey.currentState;
+    if (taskContentPartState == null) return;
+
+    if (taskContentPartState.formKey.currentState!.validate()) {
+      final viewModel = context.read<ViewModel>();
+
+      final taskUpdated = selectedTask.copyWith(
+        title: taskContentPartState.titleController.text,
+        detail: taskContentPartState.detailController.text,
+        limitDateTime: taskContentPartState.limitDateTime,
+        isImportant: taskContentPartState.isImportant,
+      );
+
+      viewModel.updateTask(taskUpdated: taskUpdated);
+
+      showSnackBar(
+        context: context,
+        contentText: StringR.editTaskCompleted,
+        isSnackBarActionNeeded: false,
+      );
+
+      endEditTask(context: context);
+    }
+  }
+
+  ///
+  void endEditTask({required BuildContext context}) {
+    final viewModel = context.read<ViewModel>();
+    final screenSize = viewModel.screenSize;
+
+    if (screenSize == ScreenSize.SMALL) {
+      Navigator.pop(context);
+    }
   }
 }

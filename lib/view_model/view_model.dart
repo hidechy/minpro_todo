@@ -76,4 +76,10 @@ class ViewModel extends ChangeNotifier {
     currentTask = selectedTask;
     notifyListeners();
   }
+
+  ///
+  void updateTask({required Task taskUpdated}) {
+    repository.updateTaskList(updateTask: taskUpdated);
+    getTaskList();
+  }
 }
