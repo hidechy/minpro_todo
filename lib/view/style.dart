@@ -18,6 +18,12 @@ class CustomColors {
   static Color taskCardBgColor(BuildContext context) {
     return Theme.of(context).cardColor;
   }
+
+  static const detailPageFabBgColor = Colors.transparent;
+
+  static Color? detailFabTextColor(BuildContext context) {
+    return Theme.of(context).textTheme.caption?.color;
+  }
 }
 
 class BreakPointWidth {
@@ -41,6 +47,8 @@ class TextStyles {
   static const newTaskItemTextStyle = TextStyle(fontSize: 16.0);
   static const newTaskDetailTextStyle = TextStyle(fontSize: 14.0);
   static const listTileChipTextStyle = TextStyle(fontSize: 12.0);
+
+  static const completeButtonTextStyle = TextStyle(fontSize: 16.0);
 }
 
 class VerticalSpacer {

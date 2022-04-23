@@ -72,6 +72,22 @@ class DetailPage extends StatelessWidget {
                   selectedTask: selectedTask,
                 )
               : null,
+          floatingActionButton: (selectedTask != null)
+              ? FloatingActionButton.extended(
+                  onPressed: () =>
+                      _finishTask(context: context, selectedTask: selectedTask),
+                  label: Text(
+                    (!selectedTask.isFinished)
+                        ? StringR.complete
+                        : StringR.inComplete,
+                    style: TextStyles.completeButtonTextStyle.copyWith(
+                      color: CustomColors.detailFabTextColor(context),
+                    ),
+                  ),
+                  backgroundColor: CustomColors.detailPageFabBgColor,
+                  elevation: 0.0,
+                )
+              : null,
         );
       },
     );
@@ -142,6 +158,27 @@ class DetailPage extends StatelessWidget {
     showSnackBar(
       context: context,
       contentText: StringR.deleteTaskCompleted,
+      isSnackBarActionNeeded: true,
+      onUndone: () => viewModel.undo(),
+    );
+
+    endEditTask(
+      context: context,
+      isEdit: false,
+    );
+  }
+
+  ///
+  _finishTask({required BuildContext context, required Task selectedTask}) {
+    final viewModel = context.read<ViewModel>();
+    final isFinished = !selectedTask.isFinished;
+    viewModel.finishTask(selectedTask: selectedTask, isFinished: isFinished);
+
+    showSnackBar(
+      context: context,
+      contentText: (isFinished)
+          ? StringR.finishTaskCompleted
+          : StringR.unFinishTaskCompleted,
       isSnackBarActionNeeded: true,
       onUndone: () => viewModel.undo(),
     );
