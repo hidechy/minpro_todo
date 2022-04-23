@@ -8,8 +8,12 @@ import '../../data/task.dart';
 import '../../view_model/view_model.dart';
 import '../../util/constants.dart';
 
+import '../common/task_content_part.dart';
+
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  DetailPage({Key? key}) : super(key: key);
+
+  final taskContentPartKey = GlobalKey<TaskContentPartState>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +23,16 @@ class DetailPage extends StatelessWidget {
         final selectedTask = data.item1;
         final screenSize = data.item2;
 
+        if (selectedTask != null && screenSize != ScreenSize.SMALL) {
+          _updateDetailInfo(selectedTask: selectedTask);
+        }
+
         return Scaffold(
           backgroundColor: CustomColors.detailBgColor,
           appBar: AppBar(
             leading: (selectedTask != null)
                 ? IconButton(
-                    icon: Icon(Icons.close),
+                    icon: const Icon(Icons.close),
                     onPressed: () {
                       _clearCurrentTask(context: context);
 
@@ -38,21 +46,28 @@ class DetailPage extends StatelessWidget {
             centerTitle: true,
             actions: (selectedTask != null)
                 ? [
-                    IconButton(
+                    const IconButton(
                       icon: Icon(Icons.done),
                       onPressed: null,
                     ),
-                    IconButton(
+                    const IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: null,
                     ),
                   ]
                 : null,
           ),
-          body: ListTile(
-            title: Text(selectedTask?.title ?? ""),
-            subtitle: Text(selectedTask?.limitDateTime.toString() ?? ""),
-          ),
+          // body: ListTile(
+          //   title: Text(selectedTask?.title ?? ""),
+          //   subtitle: Text(selectedTask?.limitDateTime.toString() ?? ""),
+          // ),
+          body: (selectedTask != null)
+              ? TaskContentPart(
+                  key: taskContentPartKey,
+                  isEditMode: true,
+                  selectedTask: selectedTask,
+                )
+              : null,
         );
       },
     );
@@ -62,5 +77,14 @@ class DetailPage extends StatelessWidget {
   void _clearCurrentTask({required BuildContext context}) {
     final viewModel = context.read<ViewModel>();
     viewModel.setCurrentTask(null);
+  }
+
+  ///
+  void _updateDetailInfo({required Task selectedTask}) {
+    final taskContentPartState = taskContentPartKey.currentState;
+    if (taskContentPartState == null) return;
+
+    taskContentPartState.taskEditing = selectedTask;
+    taskContentPartState.setDetailData();
   }
 }

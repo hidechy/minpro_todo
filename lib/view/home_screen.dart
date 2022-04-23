@@ -22,12 +22,12 @@ class HomeScreen extends StatelessWidget {
         viewModel.screenSize = ScreenSize.LARGE;
 
         return Row(
-          children: const [
-            Expanded(
+          children: [
+            const Expanded(
               flex: 3,
               child: SideMenuPage(),
             ),
-            Expanded(
+            const Expanded(
               flex: 4,
               child: TaskListPage(),
             ),
@@ -41,8 +41,8 @@ class HomeScreen extends StatelessWidget {
         viewModel.screenSize = ScreenSize.MID;
 
         return Row(
-          children: const [
-            Expanded(
+          children: [
+            const Expanded(
               flex: 1,
               child: TaskListPage(),
             ),

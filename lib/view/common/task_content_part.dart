@@ -6,8 +6,14 @@ import '../../util/constants.dart';
 
 import '../../util/functions.dart';
 
+import '../../data/task.dart';
+
 class TaskContentPart extends StatefulWidget {
-  const TaskContentPart({Key? key}) : super(key: key);
+  const TaskContentPart({Key? key, this.selectedTask, required this.isEditMode})
+      : super(key: key);
+
+  final Task? selectedTask;
+  final bool isEditMode;
 
   @override
   State<TaskContentPart> createState() => TaskContentPartState();
@@ -20,6 +26,26 @@ class TaskContentPartState extends State<TaskContentPart> {
   final detailController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  Task? taskEditing;
+
+  @override
+  void initState() {
+    if (widget.isEditMode && widget.selectedTask != null) {
+      taskEditing = widget.selectedTask;
+      setDetailData();
+    }
+
+    super.initState();
+  }
+
+  ///
+  void setDetailData() {
+    titleController.text = taskEditing!.title;
+    detailController.text = taskEditing!.detail;
+    isImportant = taskEditing!.isImportant;
+    limitDateTime = taskEditing!.limitDateTime;
+  }
 
   @override
   Widget build(BuildContext context) {
