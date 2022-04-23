@@ -23,3 +23,8 @@ class StringR {
   static String showMenu = "メニューを表示";
   static String showLicense = "ライセンスの表示";
 }
+
+enum TaskListTileMenu {
+  EDIT,
+  DELETE,
+}
