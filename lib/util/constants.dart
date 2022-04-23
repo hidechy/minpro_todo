@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class StringR {
   static String taskList = "TODOリスト";
   static String appTitle = "シンプルTODOリスト";

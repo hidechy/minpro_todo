@@ -110,8 +110,9 @@ class _TileListTilePartState extends State<TileListTilePart> {
         trailing: (DeviceInfo.isWebOrDesktop)
             ? PopupMenuButton(
                 tooltip: StringR.showMenu,
-                icon:
-                    (isDisplayPopupMenu) ? Icon(Icons.more_vert) : Container(),
+                icon: (isDisplayPopupMenu)
+                    ? const Icon(Icons.more_vert)
+                    : Container(),
                 itemBuilder: (BuildContext context) {
                   return [
                     PopupMenuItem<TaskListTileMenu>(
