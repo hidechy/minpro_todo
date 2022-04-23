@@ -37,14 +37,18 @@ class _TileListTilePartState extends State<TileListTilePart> {
   Widget build(BuildContext context) {
     return MouseRegion(
       onHover: (event) {
-        setState(() {
-          isDisplayPopupMenu = true;
-        });
+        if (DeviceInfo.isWebOrDesktop) {
+          setState(() {
+            isDisplayPopupMenu = true;
+          });
+        }
       },
       onExit: (event) {
-        setState(() {
-          isDisplayPopupMenu = false;
-        });
+        if (DeviceInfo.isWebOrDesktop) {
+          setState(() {
+            isDisplayPopupMenu = false;
+          });
+        }
       },
       child: ListTile(
         leading: Radio(
@@ -103,29 +107,32 @@ class _TileListTilePartState extends State<TileListTilePart> {
         //       )
         //     : null,
 
-        trailing: PopupMenuButton(
-          tooltip: StringR.showMenu,
-          icon: (isDisplayPopupMenu) ? Icon(Icons.more_vert) : Container(),
-          itemBuilder: (BuildContext context) {
-            return [
-              PopupMenuItem<TaskListTileMenu>(
-                child: Text(StringR.edit),
-                value: TaskListTileMenu.EDIT,
-              ),
-              PopupMenuItem<TaskListTileMenu>(
-                child: Text(StringR.delete),
-                value: TaskListTileMenu.DELETE,
-              ),
-            ];
-          },
-          onSelected: (selectedMenu) {
-            if (selectedMenu == TaskListTileMenu.EDIT) {
-              widget.onEdit();
-            } else {
-              widget.onDelete();
-            }
-          },
-        ),
+        trailing: (DeviceInfo.isWebOrDesktop)
+            ? PopupMenuButton(
+                tooltip: StringR.showMenu,
+                icon:
+                    (isDisplayPopupMenu) ? Icon(Icons.more_vert) : Container(),
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem<TaskListTileMenu>(
+                      child: Text(StringR.edit),
+                      value: TaskListTileMenu.EDIT,
+                    ),
+                    PopupMenuItem<TaskListTileMenu>(
+                      child: Text(StringR.delete),
+                      value: TaskListTileMenu.DELETE,
+                    ),
+                  ];
+                },
+                onSelected: (selectedMenu) {
+                  if (selectedMenu == TaskListTileMenu.EDIT) {
+                    widget.onEdit();
+                  } else {
+                    widget.onDelete();
+                  }
+                },
+              )
+            : null,
       ),
     );
   }

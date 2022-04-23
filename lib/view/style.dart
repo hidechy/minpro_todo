@@ -2,6 +2,10 @@
 
 import 'package:flutter/material.dart';
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+
 // class PageColor {
 //   static const sideMenuBgColor = Color(0xFF1b1b1b);
 //   static const taskListBgColor = Color(0xFF212121);
@@ -62,4 +66,11 @@ class HorizontalSpacer {
 
 class WidgetColors {
   static const timeOverChipBgColor = Colors.redAccent;
+}
+
+class DeviceInfo {
+  static bool get isDesktop =>
+      !kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux);
+
+  static bool get isWebOrDesktop => kIsWeb || isDesktop;
 }
