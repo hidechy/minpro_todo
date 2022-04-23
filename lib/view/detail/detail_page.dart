@@ -22,22 +22,32 @@ class DetailPage extends StatelessWidget {
         return Scaffold(
           backgroundColor: CustomColors.detailBgColor,
           appBar: AppBar(
-            leading: const IconButton(
-              icon: Icon(Icons.close),
-              onPressed: null,
-            ),
+            leading: (selectedTask != null)
+                ? IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      _clearCurrentTask(context: context);
+
+                      if (screenSize == ScreenSize.SMALL) {
+                        Navigator.pop(context);
+                      }
+                    },
+                  )
+                : null,
             title: Text(StringR.taskDetail),
             centerTitle: true,
-            actions: const [
-              IconButton(
-                icon: Icon(Icons.done),
-                onPressed: null,
-              ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: null,
-              ),
-            ],
+            actions: (selectedTask != null)
+                ? [
+                    IconButton(
+                      icon: Icon(Icons.done),
+                      onPressed: null,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: null,
+                    ),
+                  ]
+                : null,
           ),
           body: ListTile(
             title: Text(selectedTask?.title ?? ""),
@@ -46,5 +56,11 @@ class DetailPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  ///
+  void _clearCurrentTask({required BuildContext context}) {
+    final viewModel = context.read<ViewModel>();
+    viewModel.setCurrentTask(null);
   }
 }

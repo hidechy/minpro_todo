@@ -141,7 +141,7 @@ class TaskListPage extends StatelessWidget {
   _showTaskDetail({required BuildContext context, required Task selectedTask}) {
     final viewModel = context.read<ViewModel>();
     final screenSize = viewModel.screenSize;
-    viewModel.setCurrentTask(selectedTask: selectedTask);
+    viewModel.setCurrentTask(selectedTask);
 
     if (screenSize == ScreenSize.SMALL) {
       Navigator.push(
